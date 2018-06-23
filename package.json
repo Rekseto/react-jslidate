@@ -26,19 +26,11 @@
     ]
   },
   "dependencies": {
-    "bootstrap": "^4.1.1",
     "classnames": "2.2.5",
     "prop-types": "^15.6.1",
-    "raphael": "2.2.7",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "react-google-maps": "9.4.5",
-    "react-loadable": "^5.4.0",
-    "react-redux": "^5.0.7",
-    "react-router-dom": "^4.2.2",
-    "reactstrap": "^6.0.1",
-    "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
     "eslint": "^4.18.2",
