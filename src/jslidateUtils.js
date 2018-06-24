@@ -1,21 +1,13 @@
-export function validate(values, validators) {
+export function validate(value, validators) {
   const errors = [];
-  let valid = true;
-  for (const field in values) {
-    const fieldErrors = {field: field, errors: []};
-    for (let validate of validators) {
-      const result = validate(values[field]);
+  for (let validate of validators) {
+    const result = validate(value);
 
-      if (result.error) {
-        fieldErrors.errors.push(result.error);
-
-        valid = false;
-      }
+    if (result.error) {
+      errors.push(result.error);
     }
-    errors.push(fieldErrors);
   }
-
-  return {valid, errors};
+  return errors;
 }
 
 export function splitIntoSpans(errors, spanClassName) {
