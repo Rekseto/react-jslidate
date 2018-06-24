@@ -1,12 +1,9 @@
-# react-jslidate
+import "./index.css";
+import React, {Component} from "react";
 
-Simple library to provide validation for your forms
+import Form from "../Form";
+import Validator from "../Validator";
 
-## Sample usage
-
-## Sample validatiors (are based on currying functions)
-
-```javascript
 const minLength = a =>
   function(val) {
     if (val.length >= a) {
@@ -24,16 +21,6 @@ const containsLetter = () =>
       return {error: "Value must include a letter"};
     }
   };
-```
-
-## Usign react-jslidate
-
-```javascript
-import "./index.css";
-import React, {Component} from "react";
-
-import Form from "../Form";
-import Validator from "../Validator";
 
 class App extends Component {
   constructor(props) {
@@ -49,20 +36,19 @@ class App extends Component {
   onSubmit(e, target, errors, valid) {
     this.setState({valid: valid});
     this.setState({errors: errors});
-    // Here you can do any actions based on form is passed or not.
   }
 
   render() {
     const valid = this.state.valid;
     const errors = this.state.errors;
-    // both of these values are stored in State but you can move it to Redux Store.
     return (
       <main className="app">
         <Form onSubmit={this.onSubmit} validators={[minLength(3)]}>
-          // Form can have validators that are applied to every Validator
+          <input id="input1" type="text" />
+
           <Validator
-            validators={[containsLetter()]} // validators applied only to content inside of Validator
-            errors={errors} //Error will be appear inside of Validator Component with className form__spanError
+            validators={[containsLetter()]}
+            errors={errors}
             valid={valid}
           >
             <input id="input3" type="text" />
@@ -75,4 +61,3 @@ class App extends Component {
 }
 
 export default App;
-```
