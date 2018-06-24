@@ -26,7 +26,7 @@ const containsLetter = () =>
   };
 ```
 
-## Usign react-jslidate
+## Using react-jslidate
 
 ```javascript
 import "./index.css";
