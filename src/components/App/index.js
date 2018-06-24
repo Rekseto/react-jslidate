@@ -2,7 +2,7 @@ import "./index.css";
 import React, {Component} from "react";
 
 import Form from "../Form";
-import {splitIntoSpans} from "../../jslidateUtils";
+import Validator from "../Validator";
 
 const minLength = a =>
   function(val) {
@@ -33,9 +33,9 @@ class App extends Component {
     errors: {}
   };
 
-  onSubmit(e, target, validation) {
-    this.setState({valid: validation.valid});
-    this.setState({errors: validation.errors});
+  onSubmit(e, target, errors, valid) {
+    this.setState({valid: valid});
+    this.setState({errors: errors});
   }
 
   render() {
@@ -43,27 +43,16 @@ class App extends Component {
     const errors = this.state.errors;
     return (
       <main className="app">
-        <Form
-          onSubmit={this.onSubmit}
-          validators={[minLength(3), containsLetter()]}
-        >
-          {valid ? null : (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: splitIntoSpans(errors[0].errors, "form__spanError")
-              }}
-            />
-          )}
+        <Form onSubmit={this.onSubmit} validators={[minLength(3)]}>
           <input id="input1" type="text" />
-          {valid ? null : (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: splitIntoSpans(errors[1].errors, "form__spanError")
-              }}
-            />
-          )}
-          <input id="input2" type="text" />
 
+          <Validator
+            validators={[containsLetter()]}
+            errors={errors}
+            valid={valid}
+          >
+            <input id="input3" type="text" />
+          </Validator>
           <input type="submit" value="OK" />
         </Form>
       </main>
