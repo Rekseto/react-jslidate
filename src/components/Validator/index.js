@@ -10,21 +10,7 @@ class Validator extends Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.props.valid ? null : (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: splitIntoSpans(
-                this.props.errors.get("input3"),
-                "form__spanError"
-              )
-            }}
-          />
-        )}
-        {this.props.children}
-      </div>
-    );
+    return <div>{this.props.children}</div>;
   }
 }
 

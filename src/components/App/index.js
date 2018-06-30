@@ -30,7 +30,7 @@ class App extends Component {
   }
   state = {
     valid: true,
-    errors: {}
+    errors: new Map()
   };
 
   onSubmit(e, target, errors, valid) {
@@ -51,6 +51,13 @@ class App extends Component {
             errors={errors}
             valid={valid}
           >
+            {valid
+              ? null
+              : errors.get("input3").map((error, index) => (
+                  <span className="form__spanError" key={index}>
+                    {error}
+                  </span>
+                ))}
             <input id="input3" type="text" />
           </Validator>
           <input type="submit" value="OK" />
