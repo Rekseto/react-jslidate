@@ -18,34 +18,26 @@ class Form extends Component {
 
     const map = new Map();
     let valid = true;
-    children
-      .filter(el => {
-        if (el instanceof Object && el.props.type === "Validator") return el;
-      })
+    this.props.children
+      .filter(el => el instanceof Object)
+      .filter(el => el.props && el.props.type === "Validator")
       .forEach(child => {
-        const target = child.props.children.filter((el, index) => {
-          if (el && el.type === "input") return el;
-        })[0];
+        const {children, validators} = child.props;
+        const inputs = children.filter(el => el && el.type === "input");
+        const target = inputs[0];
+        let stuff = this.props.validators;
 
-        if (child.props.validators instanceof Array) {
-          const validators = this.props.validators.concat(
-            child.props.validators
-          );
-
-          const resultValidation = validate(
-            formData[target.props.id],
-            validators
-          );
-          if (resultValidation.length > 0) valid = false;
-          map.set(target.props.id, resultValidation);
-        } else {
-          const resultValidation = validate(
-            formData[target.props.id],
-            this.props.validators
-          );
-          if (resultValidation.length > 0) valid = false;
-          map.set(target.props.id, resultValidation);
+        if (validators instanceof Array) {
+          stuff = stuff.concat(validators);
         }
+
+        const result = validate(formData[target.props.id], stuff);
+
+        if (valid && result.length > 0) {
+          valid = false;
+        }
+
+        map.set(target.props.id, result);
       });
 
     this.props.onSubmit(e, this, map, valid);
