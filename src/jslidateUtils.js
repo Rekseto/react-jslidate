@@ -1,19 +1,16 @@
 export function validate(value, validators) {
-  const errors = [];
-  for (let validate of validators) {
-    const result = validate(value);
-
-    if (result.error) {
-      errors.push(result.error);
-    }
-  }
+  const errors = validators
+    .map( validator => validator(value) )
+    .filter( result => result.error )
+    .map( result => result.error );
+  
   return errors;
 }
 
 export function splitIntoSpans(errors, spanClassName) {
-  let result = "";
-  for (let error of errors) {
-    result += `<span class=${spanClassName}>${error}</span>`;
-  }
+  const result = errors
+    .map(error => `<span class=${spanClassName}>${error}</span>`)
+    .join('');
+  
   return result;
 }
