@@ -26,7 +26,7 @@ const containsLetter = () =>
   };
 ```
 
-## Usign react-jslidate
+## Using react-jslidate
 
 ```javascript
 import "./index.css";
@@ -61,10 +61,17 @@ class App extends Component {
         <Form onSubmit={this.onSubmit} validators={[minLength(3)]}>
           // Form can have validators that are applied to every Validator
           <Validator
-            validators={[containsLetter()]} // validators applied only to content inside of Validator
-            errors={errors} //Error will be appear inside of Validator Component with className form__spanError
+            validators={[containsLetter()]}
+            errors={errors}
             valid={valid}
           >
+            {valid
+              ? null
+              : errors.get("input3").map((error, index) => (
+                  <span className="form__spanError" key={index}>
+                    {error}
+                  </span>
+                ))}
             <input id="input3" type="text" />
           </Validator>
           <input type="submit" value="OK" />
